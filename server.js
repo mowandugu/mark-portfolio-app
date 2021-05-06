@@ -19,10 +19,12 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+//Timestamp Microservices Request
 app.get("/timestamp", function (req, res) {
   res.sendFile(__dirname + '/views/timestamp.html');
 });
 
+//Request Header Parser request
 app.get("/requestHeaderParser", function (req, res) {
   res.sendFile(__dirname + '/views/requestHeaderParser.html');
 });
@@ -30,12 +32,11 @@ app.get("/requestHeaderParser", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
-  console.log({greeting: 'hello API'});
   res.json({greeting: 'hello API'});
 });
 
-
-app.get("/api", (req, res) => {
+//empty date paramater to return current time in json
+app.get("/api/timestamp", (req, res) => {
   var now = new Date();
 
   res.json({
@@ -44,7 +45,9 @@ app.get("/api", (req, res) => {
   });
 });
 
-app.get("/api/:date_string", (req, res) => {
+
+//valid date requests to return unix & utc keys
+app.get("/api/timestamp/:date_string", (req, res) => {
   let dateString = req.params.date_string;
 
   if(parseInt(dateString) > 10000){
@@ -65,8 +68,20 @@ app.get("/api/:date_string", (req, res) => {
       "unix": parsedInValue.getTime(),
       "utc": parsedInValue.toUTCString()
     });
-  }
+  };
 });
+
+
+app.get("/api/whoami", (req, res) => {
+  res.json({
+    //value: Object.keys(req),
+    "ipaddress": req.ip,
+    "language": req.headers["accept-language"],
+    "software": req.headers["user-agent"],
+    //"req-headers": req.headers
+  });
+});
+
 
 // listen for requests :)
 var listener = app.listen(port, function () {
