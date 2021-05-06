@@ -26,10 +26,28 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+
+app.get("/api", (req, res) => {
+  var now = new Date();
+
+  res.json({
+    "unix": now.getTime(),
+    "utc": now.toUTCString()
+  });
+});
+
 app.get("/api/:date_string", (req, res) => {
   let dateString = req.params.date_string;
-  console.log(dateString);
-  res.json({"error": "Invalid Date"});
+  let parsedInValue = new Date(dateString);
+
+  if(parsedInValue == "Invalid Date"){
+    res.json({"error": "Invalid Date"});
+  }else{
+    res.json({
+      "unix": parsedInValue.getTime(),
+      "utc": parsedInValue.toUTCString()
+    });
+  }
 });
 
 // listen for requests :)
