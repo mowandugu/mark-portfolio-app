@@ -19,12 +19,11 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-//Timestamp Microservices Request
 app.get("/timestamp", function (req, res) {
   res.sendFile(__dirname + '/views/timestamp.html');
 });
 
-//Request Header Parser request
+
 app.get("/requestHeaderParser", function (req, res) {
   res.sendFile(__dirname + '/views/requestHeaderParser.html');
 });
@@ -71,7 +70,7 @@ app.get("/api/timestamp/:date_string", (req, res) => {
   };
 });
 
-
+//Request Header Parser
 app.get("/api/whoami", (req, res) => {
   res.json({
     //value: Object.keys(req),
